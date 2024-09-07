@@ -1,0 +1,62 @@
+\documentclass[handout]{beamer}
+\usetheme{Boadilla}
+
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{cite, graphicx, latexcolors}
+\usepackage{ragged2e, microtype}
+\usepackage{url, parskip, hyperref}
+\usepackage[dvipsnames]{xcolor}
+
+\hypersetup{colorlinks=true, linkcolor=blue,}
+\setbeamercolor{title}{fg=internationalkleinblue}
+
+\input{titlepage.tex}
+
+\begin{document}
+
+\section*{Titlepage}
+\begin{frame}\titlepage\end{frame}
+
+\section{Introduction}
+\begin{frame}{Introduction}
+\begin{enumerate}
+\item Model Predictive Control (MPC)
+\item Non-linear Model Predictive Control (NMPC)
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Motivation}
+
+\end{frame}
+
+\begin{frame}{Literature Survey}
+
+\end{frame}
+
+\begin{frame}{Literature Survey}{3D Single Rigid Body Dynamics}
+\[
+    \dot{\mathbf{x}} = f(\mathbf{x}, \mathbf{u})
+    = \begin{bmatrix}
+        \dot{\mathbf{p}} \\
+        \ddot{\mathbf{p}} \\
+        \dot{\mathbf{R}} \\
+        {}^{B}\dot{\boldsymbol{\omega}} \\
+    \end{bmatrix}
+    = \begin{bmatrix}
+        \dot{\mathbf{p}} \\
+        \frac{1}{M}\mathbf{f} - \mathbf{a_g} \\
+        \mathbf{R} \cdot {}^{B}\boldsymbol{\hat{\omega}} \\
+        {}^{B}\mathbf{I}^{-1}(\mathbf{R}^T\boldsymbol{\tau} -  {}^{B}\boldsymbol{\hat{\omega}}\mathbf{I}\boldsymbol{\omega}) \\
+    \end{bmatrix}
+\]
+\end{frame}
+
+\begin{frame}{Project Timeline}
+
+\end{frame}
+
+\begin{frame}
+    \LARGE{Thank You!}
+\end{frame}
+
+\end{document}
