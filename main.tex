@@ -1,92 +1,164 @@
 \documentclass{beamer}
-\usetheme{Boadilla}
+\usetheme{metropolis}
 
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage{cite, graphicx, latexcolors}
 \usepackage{ragged2e, microtype}
 \usepackage{url, parskip, hyperref}
-\usepackage{array}
+\usepackage{array, tikz, flowchart}
 \usepackage[dvipsnames]{xcolor}
 
-\hypersetup{colorlinks=true, linkcolor=blue,}
-\setbeamercolor{title}{fg=internationalkleinblue}
+\hypersetup{colorlinks=true,}
+\setbeamercolor{title}{fg=orange}
+
+\usetikzlibrary{arrows.meta, calc, chains, quotes, positioning, shapes.geometric}
+\tikzset{FlowChart/.style={
+    node distance = 5mm and 10mm,
+    start chain = A going right,
+    base/.style = {draw, minimum width=16mm, minimum height=19mm, align=center, on chain=A, text width=4cm},
+    process/.style = {base},
+    rounded/.style = {base, rounded corners},
+    every edge quotes/.style = {auto=right}
+}}
 
 \input{titlepage.tex}
 
 \begin{document}
 
-\section*{Titlepage}
+
+% \section*{Titlepage}
 \begin{frame}\titlepage\end{frame}
 
-\section{Introduction}
+
+% \section*{Outline}
+\begin{frame}{Outline}
+    \begin{enumerate}
+        \item Introduction
+        \item Literature Survey
+        \item Motivation
+        \item Implementation strategy
+        \item Project Timeline
+    \end{enumerate}
+\end{frame}
+
+
+% \section{Introduction}
 \begin{frame}{Introduction}
     \begin{enumerate}
         \item Model Predictive Control (MPC)
-        \item Non-linear Model Predictive Control (NMPC)
     \end{enumerate}
 \end{frame}\normalfont
 
-\begin{frame}{Motivation}
-    \begin{enumerate}
-        \item Control Algorithm Implementation
-        \item Multibody Dynamics Simulation
-        \item Control Optimization
-        \item Trajectory Tracking
-        \item Real-Time Execution
-    \end{enumerate}
 
+\begin{frame}{Literature Survey}
+\scriptsize
+    \centering
+    \begin{table}[ht]
+        \resizebox{\textwidth}{!}{
+            \begin{tabular}{|>{\centering\arraybackslash}p{2.5cm}|>{\centering\arraybackslash}p{3.0cm}|>{\centering\arraybackslash}p{3.5cm}|>{\centering\arraybackslash}p{5.0cm}|}
+                \hline
+                \textbf{Title} & \textbf{Authors} & \textbf{Objectives} & \textbf{Key Takeaways} \\
+                \hline
+                Online Planning for Autonomous Running Jumps Over Obstacles in High-Speed Quadrupeds & Hae-Won Park, Patrick M. Wensing, and Sangbae Kim Department of Mechanical Engineering, MIT, Cambridge, MA, 02139 
+ & Presents a novel control framework for quadrupedal robots, enabling dynamic running jumps over obstacles through model predictive control and constrained nonlinear optimization. & Introduces a model predictive control (MPC) framework for dynamic jumping in quadrupeds. \\
+                \hline
+                Successive Linearization NMPC for a Class of
+Stochastic Nonlinear Systems & Mark Cannon, Desmond Ng, and Basil Kouvaritakis &  The proposed method is designed for nonlinear systems with stochastic disturbance &  Can be referred for successive linearization\\
+                \hline
+                 Variation-Based Linearization of Nonlinear
+Systems Evolving on SO(3) and S^2 & Guofam Wu and Koushil Sreenath & Propose a variation-based method to linearize the nonlinear dynamics of robotic systems, whose configuration spaces contain the manifolds S2 and SO(3), along dynamically feasible reference trajectories. & This paper has presented a variation-based method to linearize a nonlinear system, whose dynamics evolve on com-
+plex manifolds that contain SO(3) and S2 , along a desired reference trajectory. \\
+                \hline
+            \end{tabular}
+        }
+    \end{table}
 \end{frame}
 
 \begin{frame}{Literature Survey}
-
+\scriptsize
+    \centering
+    \begin{table}[ht]
+        \resizebox{\textwidth}{!}{
+            \begin{tabular}{|>{\centering\arraybackslash}p{2.5cm}|>{\centering\arraybackslash}p{3.0cm}|>{\centering\arraybackslash}p{3.5cm}|>{\centering\arraybackslash}p{5.0cm}|}
+                \hline
+                \textbf{Title} & \textbf{Authors} & \textbf{Objectives} & \textbf{Key Takeaways} \\
+                \hline
+                Real-time Model Predictive Control for Versatile Dynamic Motions in
+Quadrupedal Robots & Yanran Ding, Abhishek Pandala, and Hae-Won Park & This paper presents a new Model Predictive
+Control (MPC) framework for controlling various dynamic
+movements of a quadrupedal robot.  & Presents a Model Predictive Control
+framework to control various kinds of dynamic maneuvers in
+3D space. By directly using linearized models with rotation
+matrices, our method could avoid issues arising from use of
+local coordinates including singularities (Euler angles) and
+unwinding issues (quaternion). Along with this linearization,
+the choice of error function on body orientation enables a
+QP formulation, which could be efficiently solved to achieve
+real-time execution. \\
+                \hline
+                &  &  &  \\
+                \hline
+                 &  &  & \\
+                \hline
+            \end{tabular}
+        }
+    \end{table}
 \end{frame}
 
-\begin{frame}{Literature Survey}{3D Single Rigid Body Dynamics}
-    \[
-        \dot{\mathbf{x}} = f(\mathbf{x}, \mathbf{u})
-        = \begin{bmatrix}
-            \dot{\mathbf{p}}                \\
-            \ddot{\mathbf{p}}               \\
-            \dot{\mathbf{R}}                \\
-            {}^{B}\dot{\boldsymbol{\omega}} \\
-        \end{bmatrix}
-        = \begin{bmatrix}
-            \dot{\mathbf{p}}                                                                                                     \\
-            \frac{1}{M}\mathbf{f} - \mathbf{a_g}                                                                                 \\
-            \mathbf{R} \cdot {}^{B}\boldsymbol{\hat{\omega}}                                                                     \\
-            {}^{B}\mathbf{I}^{-1}(\mathbf{R}^T\boldsymbol{\tau} -  {}^{B}\boldsymbol{\hat{\omega}}\mathbf{I}\boldsymbol{\omega}) \\
-        \end{bmatrix}
-    \]
+
+\begin{frame}{Motivation}
+    \begin{enumerate}
+        \item Linearize single RBD rotations matrices \textbf{without resorting to parametrization}
+        \item Avoid issues arising from using \textbf{local coordinates}\\
+            \textit{Euler angles:} Have singularity issues\\
+            \textit{Quaternions:} Unwinding issues
+        \item Enable a \textit{QP formulation} for \textbf{real-time execution} using a linearization  technique and use of a configuration error function on $SO(3)$
+        \item Development of a \textbf{singularity-free MPC formulation} with consistent performance even when executing motions that involve complex 3D rotations
+    \end{enumerate}
 \end{frame}
+
+
+\begin{frame}{Overview}
+    \input{overview.tex}
+
+    \setlength{\itemsep}{1em}
+    \setlength{\parskip}{2pt} 
+    \begin{enumerate}\small
+        \item Template model
+            \begin{enumerate}\scriptsize
+                \item 3D Single Rigid Body Dynamics
+                \item Global coordinate frame for rotations
+            \end{enumerate}
+        \item Nonlinear MPC formulation
+            \begin{enumerate}\scriptsize
+                \item Non-linear terms for rotations in state space model
+                \item Formulate the NMPC as a constrained optimisation problem
+            \end{enumerate}
+        \item Variation-based Linearisation
+            \begin{enumerate}\scriptsize
+                \item Succesive Linearisation
+            \end{enumerate}
+        \item Vectorisation
+            \begin{enumerate}\scriptsize
+                \item Using Kronecker products
+            \end{enumerate}
+        \item Simulations
+            \begin{enumerate}\scriptsize
+                \item Different walking styles
+            \end{enumerate}
+    \end{enumerate}
+    
+\end{frame}
+
 
 \begin{frame}{Project Timeline}
-    \scriptsize
-    \centering
-    \resizebox{\textwidth}{!}{
-        \begin{tabular}{|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{3.5cm}|>{\centering\arraybackslash}p{5.5cm}|}
-            \hline
-            \textbf{Week} & \textbf{Objective}                                  & \textbf{Key Deliverables}                                                  \\
-            \hline
-            \textbf{1}    & \textbf{Research and Setup}                         & Literature review, simulation environment setup                            \\
-            \hline
-            \textbf{2}    & \textbf{Model Development}                          & Mathematical model of robot dynamics, basic MPC code                       \\
-            \hline
-            \textbf{3}    & \textbf{Cost Function and QP Solver Integration}    & Fully formulated cost function, working QP solver with control constraints \\
-            \hline
-            \textbf{4}    & \textbf{Simulation and Trajectory Testing}          & Initial simulation results for basic gaits, trajectory tracking data       \\
-            \hline
-            \textbf{5}    & \textbf{Real-Time Optimization}                     & Real-time capable MPC controller, tuned MPC parameters                     \\
-            \hline
-            \textbf{6}    & \textbf{Advanced Testing and Refinement}            & Simulation results for advanced gaits, refined and robust controller       \\
-            \hline
-            \textbf{7}    & \textbf{Final Testing and Presentation Preparation} & Final report, presentation slides, demo videos                             \\
-            \hline
-        \end{tabular}
-    }
+    \input{timeline.tex}
 \end{frame}
+
 
 \begin{frame}
     \LARGE{Thank You!}
 \end{frame}
+
 
 \end{document}

@@ -1,0 +1,25 @@
+\resizebox{\textwidth}{!}{%
+    \begin{tikzpicture}[FlowChart]
+        \node [process, text width=3cm] {
+            3D Single Rigid Body Dynamics
+        };
+        \node [process, text width=3cm] {
+            Nonlinear MPC Formulation
+        };
+        \node [process, text width=3.1cm] {
+            Variation-based Linearisation
+        };
+        \node [process, text width=2.5cm] {
+            Vectorisation
+        };
+        \node [process, text width=2.5cm] {
+            Simulations
+        };
+    
+        \draw [arrows=-Stealth]
+        (A-1) edge (A-2)
+        (A-2) edge (A-3)
+        (A-3) edge (A-4)
+        (A-4) edge (A-5);
+    \end{tikzpicture}
+}
