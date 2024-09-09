@@ -32,132 +32,132 @@
 
 % \section*{Outline}
 \begin{frame}{Outline}
-    \begin{enumerate}
-        \item Introduction
-        \item Literature Survey
-        \item Motivation
-        \item Implementation strategy
-        \item Project Timeline
-    \end{enumerate}
+	\begin{enumerate}
+		\item Introduction
+		\item Literature Survey
+		\item Motivation
+		\item Implementation strategy
+		\item Project Timeline
+	\end{enumerate}
 \end{frame}
 
 
 % \section{Introduction}
 \begin{frame}{Introduction}
-    \begin{enumerate}
-        \item \textbf{Model Predictive Control (MPC)} is a method that predicted a system's future behavior and calculates optimal control action to follow a desired path.
-        \item \textbf{Optimization Based:} MPC solves an optimization problem at each step to minimize a cost function that balances trajectory accuracy and control effort while considering system constraints.
-        \item \textbf{Handles constraints:} It is capable of handling both control and state constraints, such as actuator limit or safety bounds, ensuring the system operates within its physical limits.
-        \item \textbf{Receding Horizon Approach:} It continuously updates its based on new information, allowing it to adjust quickly to changes in the system or environment.
-    \end{enumerate}
+	\begin{enumerate}
+		\item \textbf{Model Predictive Control (MPC)} is a method that predicted a system's future behavior and calculates optimal control action to follow a desired path.
+		\item \textbf{Optimization Based:} MPC solves an optimization problem at each step to minimize a cost function that balances trajectory accuracy and control effort while considering system constraints.
+		\item \textbf{Handles constraints:} It is capable of handling both control and state constraints, such as actuator limit or safety bounds, ensuring the system operates within its physical limits.
+		\item \textbf{Receding Horizon Approach:} It continuously updates its based on new information, allowing it to adjust quickly to changes in the system or environment.
+	\end{enumerate}
 \end{frame}\normalfont
 
-\begin{frame}{Literature Survey}
-\scriptsize
-    \centering
-    \begin{table}[ht]
-        \resizebox{\textwidth}{!}{
-            \begin{tabular}{|>{\centering\arraybackslash}p{2.5cm}|>{\centering\arraybackslash}p{3.0cm}|>{\centering\arraybackslash}p{3.5cm}|>{\centering\arraybackslash}p{5.0cm}|}
-                \hline
-                \textbf{Title} & \textbf{Authors} & \textbf{Objectives} & \textbf{Key Takeaways} \\
-                \hline
-                Real-time Model Predictive Control for Versatile Dynamic Motions in
-Quadrupedal Robots & Yanran Ding, Abhishek Pandala, and Hae-Won Park & This paper presents a new Model Predictive
-Control (MPC) framework for controlling various dynamic
-movements of a quadrupedal robot.  & Presents a Model Predictive Control
-framework to control various kinds of dynamic maneuvers in
-3D space. By directly using linearized models with rotation
-matrices, our method could avoid issues arising from use of
-local coordinates including singularities (Euler angles) and
-unwinding issues (quaternion). Along with this linearization,
-the choice of error function on body orientation enables a
-QP formulation, which could be efficiently solved to achieve
-real-time execution. \\
-                \hline
 
-            \end{tabular}
-        }
-    \end{table}
+\begin{frame}{Literature Survey}
+	\scriptsize
+	\centering
+	\begin{table}[ht]
+		\resizebox{\textwidth}{!}{
+			\begin{tabular}{|>{\centering\arraybackslash}p{2.5cm}|>{\centering\arraybackslash}p{3.0cm}|>{\centering\arraybackslash}p{3.5cm}|>{\centering\arraybackslash}p{5.0cm}|}
+				\hline
+				\textbf{Title} & \textbf{Authors} & \textbf{Objectives} & \textbf{Key Takeaways} \\
+				\hline
+				Real-time Model Predictive Control for Versatile Dynamic Motions in
+				Quadrupedal Robots                & Yanran Ding, Abhishek Pandala, and Hae-Won Park & This paper presents a new Model Predictive
+				Control (MPC) framework for controlling various dynamic
+				movements of a quadrupedal robot. & Presents a Model Predictive Control
+				framework to control various kinds of dynamic maneuvers in
+				3D space. By directly using linearized models with rotation
+				matrices, our method could avoid issues arising from use of
+				local coordinates including singularities (Euler angles) and
+				unwinding issues (quaternion). Along with this linearization,
+				the choice of error function on body orientation enables a
+				QP formulation, which could be efficiently solved to achieve
+				real-time execution.                                                                                                                                      \\
+				\hline
+			\end{tabular}
+		}
+	\end{table}
 \end{frame}
 
 \begin{frame}{Literature Survey}
-\scriptsize
-    \centering
-    \begin{table}[ht]
-        \resizebox{\textwidth}{!}{
-            \begin{tabular}{|>{\centering\arraybackslash}p{2.5cm}|>{\centering\arraybackslash}p{3.0cm}|>{\centering\arraybackslash}p{3.5cm}|>{\centering\arraybackslash}p{5.0cm}|}
-                \hline
-                \textbf{Title} & \textbf{Authors} & \textbf{Objectives} & \textbf{Key Takeaways} \\
-                \hline
-                Online Planning for Autonomous Running Jumps Over Obstacles in High-Speed Quadrupeds & Hae-Won Park, Patrick M. Wensing, and Sangbae Kim Department of Mechanical Engineering, MIT, Cambridge, MA, 02139 
- & Presents a novel control framework for quadrupedal robots, enabling dynamic running jumps over obstacles through model predictive control and constrained nonlinear optimization. & Introduces a model predictive control (MPC) framework for dynamic jumping in quadrupeds. \\
-                \hline
-                Successive Linearization NMPC for a Class of
-Stochastic Nonlinear Systems & Mark Cannon, Desmond Ng, and Basil Kouvaritakis &  The proposed method is designed for nonlinear systems with stochastic disturbance &  Can be referred for successive linearization\\
-                \hline
-                 Variation-Based Linearization of Nonlinear
-Systems Evolving on SO(3) and S^2 & Guofam Wu and Koushil Sreenath & Propose a variation-based method to linearize the nonlinear dynamics of robotic systems, whose configuration spaces contain the manifolds S2 and SO(3), along dynamically feasible reference trajectories. & This paper has presented a variation-based method to linearize a nonlinear system, whose dynamics evolve on com-
-plex manifolds that contain SO(3) and S2 , along a desired reference trajectory. \\
-                \hline
-            \end{tabular}
-        }
-    \end{table}
+	\scriptsize
+	\centering
+	\begin{table}[ht]
+		\resizebox{\textwidth}{!}{
+			\begin{tabular}{|>{\centering\arraybackslash}p{2.5cm}|>{\centering\arraybackslash}p{3.0cm}|>{\centering\arraybackslash}p{3.5cm}|>{\centering\arraybackslash}p{5.0cm}|}
+				\hline
+				\textbf{Title}                    & \textbf{Authors}                                & \textbf{Objectives}                                                                                                                                                                                        & \textbf{Key Takeaways}                                                                                           \\
+				\hline
+				Online Planning for Autonomous Running Jumps Over Obstacles in High-Speed Quadrupeds & Hae-Won Park, Patrick M. Wensing, and Sangbae Kim Department of Mechanical Engineering, MIT, Cambridge, MA, 02139
+				& Presents a novel control framework for quadrupedal robots, enabling dynamic running jumps over obstacles through model predictive control and constrained nonlinear optimization. & Introduces a model predictive control (MPC) framework for dynamic jumping in quadrupeds.                                                                                                                                                                                                                                      \\
+				\hline
+				Successive Linearization NMPC for a Class of
+				Stochastic Nonlinear Systems      & Mark Cannon, Desmond Ng, and Basil Kouvaritakis & The proposed method is designed for nonlinear systems with stochastic disturbance                                                                                                                          & Can be referred for successive linearization                                                                     \\
+				\hline
+				Variation-Based Linearization of Nonlinear
+				Systems Evolving on SO(3) and S^2 & Guofam Wu and Koushil Sreenath                  & Propose a variation-based method to linearize the nonlinear dynamics of robotic systems, whose configuration spaces contain the manifolds S2 and SO(3), along dynamically feasible reference trajectories. & This paper has presented a variation-based method to linearize a nonlinear system, whose dynamics evolve on com- 
+				plex manifolds that contain SO(3) and S2 , along a desired reference trajectory.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         \\
+				\hline
+			\end{tabular}
+		}
+	\end{table}
 \end{frame}
 
 
 
 \begin{frame}{Motivation}
-    \begin{enumerate}
-        \item Linearize single RBD rotations matrices \textbf{without resorting to parametrization}
-        \item Avoid issues arising from using \textbf{local coordinates}\\
-            \textit{Euler angles:} Have singularity issues\\
-            \textit{Quaternions:} Unwinding issues
-        \item Enable a \textit{QP formulation} for \textbf{real-time execution} using a linearization  technique and use of a configuration error function on $SO(3)$
-        \item Development of a \textbf{singularity-free MPC formulation} with consistent performance even when executing motions that involve complex 3D rotations
-    \end{enumerate}
+	\begin{enumerate}
+		\item Linearize single RBD rotations matrices \textbf{without resorting to parametrization}
+		\item Avoid issues arising from using \textbf{local coordinates}\\
+		      \textit{Euler angles:} Have singularity issues\\
+		      \textit{Quaternions:} Unwinding issues
+		\item Enable a \textit{QP formulation} for \textbf{real-time execution} using a linearization  technique and use of a configuration error function on $SO(3)$
+		\item Development of a \textbf{singularity-free MPC formulation} with consistent performance even when executing motions that involve complex 3D rotations
+	\end{enumerate}
 \end{frame}
 
 
 \begin{frame}{Overview}
-    \input{overview.tex}
-
-    \setlength{\itemsep}{1em}
-    \setlength{\parskip}{2pt} 
-    \begin{enumerate}\small
-        \item Template model
-            \begin{enumerate}\scriptsize
-                \item 3D Single Rigid Body Dynamics
-                \item Global coordinate frame for rotations
-            \end{enumerate}
-        \item Nonlinear MPC formulation
-            \begin{enumerate}\scriptsize
-                \item Non-linear terms for rotations in state space model
-                \item Formulate the NMPC as a constrained optimisation problem
-            \end{enumerate}
-        \item Variation-based Linearisation
-            \begin{enumerate}\scriptsize
-                \item Succesive Linearisation
-            \end{enumerate}
-        \item Vectorisation
-            \begin{enumerate}\scriptsize
-                \item Using Kronecker products
-            \end{enumerate}
-        \item Simulations
-            \begin{enumerate}\scriptsize
-                \item Different walking styles
-            \end{enumerate}
-    \end{enumerate}
-    
+	\input{overview.tex}
+	
+	\setlength{\itemsep}{1em}
+	\setlength{\parskip}{2pt}
+	\begin{enumerate}\small
+		\item Template model
+		      \begin{enumerate}\scriptsize
+		      	\item 3D Single Rigid Body Dynamics
+		      	\item Global coordinate frame for rotations
+		      \end{enumerate}
+		\item Nonlinear MPC formulation
+		      \begin{enumerate}\scriptsize
+		      	\item Non-linear terms for rotations in state space model
+		      	\item Formulate the NMPC as a constrained optimisation problem
+		      \end{enumerate}
+		\item Variation-based Linearisation
+		      \begin{enumerate}\scriptsize
+		      	\item Succesive Linearisation
+		      \end{enumerate}
+		\item Vectorisation
+		      \begin{enumerate}\scriptsize
+		      	\item Using Kronecker products
+		      \end{enumerate}
+		\item Simulations
+		      \begin{enumerate}\scriptsize
+		      	\item Different walking styles
+		      \end{enumerate}
+	\end{enumerate}
+	
 \end{frame}
 
 
 \begin{frame}{Project Timeline}
-    \input{timeline.tex}
+	\input{timeline.tex}
 \end{frame}
 
 
 \begin{frame}
-    \LARGE{Thank You!}
+	\LARGE{Thank You!}
 \end{frame}
 
 
