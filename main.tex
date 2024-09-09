@@ -45,10 +45,40 @@
 % \section{Introduction}
 \begin{frame}{Introduction}
     \begin{enumerate}
-        \item Model Predictive Control (MPC)
+        \item \textbf{Model Predictive Control (MPC)} is a method that predicted a system's future behavior and calculates optimal control action to follow a desired path.
+        \item \textbf{Optimization Based:} MPC solves an optimization problem at each step to minimize a cost function that balances trajectory accuracy and control effort while considering system constraints.
+        \item \textbf{Handles constraints:} It is capable of handling both control and state constraints, such as actuator limit or safety bounds, ensuring the system operates within its physical limits.
+        \item \textbf{Receding Horizon Approach:} It continuously updates its based on new information, allowing it to adjust quickly to changes in the system or environment.
     \end{enumerate}
 \end{frame}\normalfont
 
+\begin{frame}{Literature Survey}
+\scriptsize
+    \centering
+    \begin{table}[ht]
+        \resizebox{\textwidth}{!}{
+            \begin{tabular}{|>{\centering\arraybackslash}p{2.5cm}|>{\centering\arraybackslash}p{3.0cm}|>{\centering\arraybackslash}p{3.5cm}|>{\centering\arraybackslash}p{5.0cm}|}
+                \hline
+                \textbf{Title} & \textbf{Authors} & \textbf{Objectives} & \textbf{Key Takeaways} \\
+                \hline
+                Real-time Model Predictive Control for Versatile Dynamic Motions in
+Quadrupedal Robots & Yanran Ding, Abhishek Pandala, and Hae-Won Park & This paper presents a new Model Predictive
+Control (MPC) framework for controlling various dynamic
+movements of a quadrupedal robot.  & Presents a Model Predictive Control
+framework to control various kinds of dynamic maneuvers in
+3D space. By directly using linearized models with rotation
+matrices, our method could avoid issues arising from use of
+local coordinates including singularities (Euler angles) and
+unwinding issues (quaternion). Along with this linearization,
+the choice of error function on body orientation enables a
+QP formulation, which could be efficiently solved to achieve
+real-time execution. \\
+                \hline
+
+            \end{tabular}
+        }
+    \end{table}
+\end{frame}
 
 \begin{frame}{Literature Survey}
 \scriptsize
@@ -74,36 +104,6 @@ plex manifolds that contain SO(3) and S2 , along a desired reference trajectory.
     \end{table}
 \end{frame}
 
-\begin{frame}{Literature Survey}
-\scriptsize
-    \centering
-    \begin{table}[ht]
-        \resizebox{\textwidth}{!}{
-            \begin{tabular}{|>{\centering\arraybackslash}p{2.5cm}|>{\centering\arraybackslash}p{3.0cm}|>{\centering\arraybackslash}p{3.5cm}|>{\centering\arraybackslash}p{5.0cm}|}
-                \hline
-                \textbf{Title} & \textbf{Authors} & \textbf{Objectives} & \textbf{Key Takeaways} \\
-                \hline
-                Real-time Model Predictive Control for Versatile Dynamic Motions in
-Quadrupedal Robots & Yanran Ding, Abhishek Pandala, and Hae-Won Park & This paper presents a new Model Predictive
-Control (MPC) framework for controlling various dynamic
-movements of a quadrupedal robot.  & Presents a Model Predictive Control
-framework to control various kinds of dynamic maneuvers in
-3D space. By directly using linearized models with rotation
-matrices, our method could avoid issues arising from use of
-local coordinates including singularities (Euler angles) and
-unwinding issues (quaternion). Along with this linearization,
-the choice of error function on body orientation enables a
-QP formulation, which could be efficiently solved to achieve
-real-time execution. \\
-                \hline
-                &  &  &  \\
-                \hline
-                 &  &  & \\
-                \hline
-            \end{tabular}
-        }
-    \end{table}
-\end{frame}
 
 
 \begin{frame}{Motivation}
