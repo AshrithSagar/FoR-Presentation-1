@@ -27,7 +27,7 @@
 
 
 % \section*{Titlepage}
-\begin{frame}\titlepage\end{frame}
+\begin{frame}\titlepage\end{frame}\normalfont
 
 
 % \section*{Outline}
@@ -39,21 +39,31 @@
 		\item Implementation strategy
 		\item Project Timeline
 	\end{enumerate}
-\end{frame}
+\end{frame}\normalfont
 
 
 % \section{Introduction}
 \begin{frame}{Introduction}
-	\begin{enumerate}
-		\item \textbf{Model Predictive Control (MPC)} is a method that predicted a system's future behavior and calculates optimal control action to follow a desired path.
-		\item \textbf{Optimization Based:} MPC solves an optimization problem at each step to minimize a cost function that balances trajectory accuracy and control effort while considering system constraints.
-		\item \textbf{Handles constraints:} It is capable of handling both control and state constraints, such as actuator limit or safety bounds, ensuring the system operates within its physical limits.
-		\item \textbf{Receding Horizon Approach:} It continuously updates its based on new information, allowing it to adjust quickly to changes in the system or environment.
-	\end{enumerate}
+        \setlength{\itemsep}{1em}
+	\setlength{\parskip}{2pt}
+	\begin{itemize}\small
+            \item Legged animals have shown their versatile mobility to traverse challenging terrains via a well-coordinated dynamic motions.
+                \begin{itemize}\scriptsize
+                    \item Design and control remains a difficult problem
+                \end{itemize}
+		\item \textbf{Model Predictive Control (MPC)}
+                \begin{itemize}\scriptsize
+                    \item A method that predicts a system's future behavior and calculates optimal control action to follow a desired path.
+                    \item Uses a Receding Horizon Approach
+                    \item Real-time execution of MPC controller is a challenge for high degree-of-freedom systems
+                \end{itemize}
+	\end{itemize}
 \end{frame}\normalfont
 
 
 \begin{frame}{Literature Survey}
+        \scriptsize{Key paper that will be implemented:}
+
 	\scriptsize
 	\centering
 	\begin{table}[ht]
@@ -63,17 +73,19 @@
 				\textbf{Title} & \textbf{Authors} & \textbf{Objectives} & \textbf{Key Takeaways} \\
 				\hline
 				Real-time Model Predictive Control for Versatile Dynamic Motions in
-				Quadrupedal Robots                & Yanran Ding, Abhishek Pandala, and Hae-Won Park & This paper presents a new Model Predictive
+				Quadrupedal Robots                
+                    &    Yanran Ding, Abhishek Pandala, and Hae-Won Park 
+                    & 
+                        This paper presents a new Model Predictive
 				Control (MPC) framework for controlling various dynamic
-				movements of a quadrupedal robot. & Presents a Model Predictive Control
-				framework to control various kinds of dynamic maneuvers in
-				3D space. By directly using linearized models with rotation
-				matrices, our method could avoid issues arising from use of
-				local coordinates including singularities (Euler angles) and
-				unwinding issues (quaternion). Along with this linearization,
-				the choice of error function on body orientation enables a
-				QP formulation, which could be efficiently solved to achieve
-				real-time execution.                                                                                                                                      \\
+				movements of a quadrupedal robot. 
+                    &
+                    \begin{itemize}
+                        \item New NMPC framework without parametrisations
+                        \item Variation-based linearization used
+                        \item Vectorization algorithm laid out
+                    \end{itemize}
+                    \\
 				\hline
 			\end{tabular}
 		}
@@ -89,15 +101,15 @@
 				\hline
 				\textbf{Title}                    & \textbf{Authors}                                & \textbf{Objectives}                                                                                                                                                                                        & \textbf{Key Takeaways}                                                                                           \\
 				\hline
-				Online Planning for Autonomous Running Jumps Over Obstacles in High-Speed Quadrupeds & Hae-Won Park, Patrick M. Wensing, and Sangbae Kim Department of Mechanical Engineering, MIT, Cambridge, MA, 02139
+				Online Planning for Autonomous Running Jumps Over Obstacles in High-Speed Quadrupeds & Hae-Won Park, Patrick M. Wensing, and Sangbae Kim 
 				& Presents a novel control framework for quadrupedal robots, enabling dynamic running jumps over obstacles through model predictive control and constrained nonlinear optimization. & Introduces a model predictive control (MPC) framework for dynamic jumping in quadrupeds.                                                                                                                                                                                                                                      \\
 				\hline
 				Successive Linearization NMPC for a Class of
-				Stochastic Nonlinear Systems      & Mark Cannon, Desmond Ng, and Basil Kouvaritakis & The proposed method is designed for nonlinear systems with stochastic disturbance                                                                                                                          & Can be referred for successive linearization                                                                     \\
+				Stochastic Nonlinear Systems      & Mark Cannon, Desmond Ng, and Basil Kouvaritakis & Presents a receding horizon control methodology for systems
+with nonlinear dynamics, additive stochastic uncertainty                                                                                                                         & Can be referred for successive linearization for operating points                                                                     \\
 				\hline
 				Variation-Based Linearization of Nonlinear
-				Systems Evolving on SO(3) and S^2 & Guofam Wu and Koushil Sreenath                  & Propose a variation-based method to linearize the nonlinear dynamics of robotic systems, whose configuration spaces contain the manifolds S2 and SO(3), along dynamically feasible reference trajectories. & This paper has presented a variation-based method to linearize a nonlinear system, whose dynamics evolve on com- 
-				plex manifolds that contain SO(3) and S2 , along a desired reference trajectory.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         \\
+				Systems Evolving on SO(3) and S^2 & Guofam Wu and Koushil Sreenath                  & Propose a variation-based method to linearize the nonlinear dynamics of robotic systems, whose configuration spaces contain the manifolds S2 and SO(3), along dynamically feasible reference trajectories. & A variation-based method to linearize a nonlinear system, whose dynamics evolve on complex manifolds that contain SO(3) and S2 , along a desired reference trajectory. \\
 				\hline
 			\end{tabular}
 		}
@@ -106,13 +118,15 @@
 
 
 
-\begin{frame}{Motivation}
+\begin{frame}{Motivation / Objective}
+        For the key paper
+
 	\begin{enumerate}
 		\item Linearize single RBD rotations matrices \textbf{without resorting to parametrization}
 		\item Avoid issues arising from using \textbf{local coordinates}\\
-		      \textit{Euler angles:} Have singularity issues\\
+		      \textit{Euler angles:} Have singularity issues; Gimbal lock\\
 		      \textit{Quaternions:} Unwinding issues
-		\item Enable a \textit{QP formulation} for \textbf{real-time execution} using a linearization  technique and use of a configuration error function on $SO(3)$
+		\item Enable a \textit{QP formulation} for \textbf{real-time execution} using a linearization  technique and use of \textit{configuration error function} on $SO(3)$
 		\item Development of a \textbf{singularity-free MPC formulation} with consistent performance even when executing motions that involve complex 3D rotations
 	\end{enumerate}
 \end{frame}
@@ -120,7 +134,7 @@
 
 \begin{frame}{Overview}
 	\input{overview.tex}
-	
+
 	\setlength{\itemsep}{1em}
 	\setlength{\parskip}{2pt}
 	\begin{enumerate}\small
@@ -147,7 +161,38 @@
 		      	\item Different walking styles
 		      \end{enumerate}
 	\end{enumerate}
-	
+\end{frame}
+
+
+\begin{frame}{Implementation Strategy}
+    \setlength{\itemsep}{1em}
+    \setlength{\parskip}{2pt}
+    \begin{enumerate}\small
+        \item Prototype the functions: Two main modules
+            \begin{enumerate}\scriptsize
+                \item \textbf{RBD class} with parameters \texttt{rbdmodel(x, u)}
+                \item \textbf{NMPC class} with an objective function
+                \begin{enumerate}\scriptsize
+                    \item Vectorise method \texttt{.vectorise()}
+                    \item QPSolve method \texttt{.qpsolve()}, using a library for solving QP
+                \end{enumerate}
+            \end{enumerate}
+        \item Validate using an initial Simulation setup
+            \begin{enumerate}\scriptsize
+                \item On Gazebo
+            \end{enumerate}
+        \item Deliverable: \texttt{pyNMPC}\\
+            \begin{enumerate}\scriptsize
+                \item A library that has all the functionality described above
+            \end{enumerate}
+        \item (*) Library-free implementation
+            \begin{enumerate}\scriptsize
+                \item Custom QP solver, as mentioned in the paper
+                \item Exploits the sparsity structure of the KKT matrix
+            \end{enumerate}
+        \item (*) Implement the vectorisation parts in C++
+    \end{enumerate}
+
 \end{frame}
 
 
@@ -158,6 +203,64 @@
 
 \begin{frame}
 	\LARGE{Thank You!}
+\end{frame}\normalfont
+
+
+\begin{frame}{RBD model}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.6\linewidth]{Illustration-RBD-model.png}
+    \caption{Illustration of the 3D Single RBD model}
+    \label{fig:rbd-model}
+\end{figure}
+\begin{equation*}
+    \mathbf{\dot{x}} = f(\mathbf{x}, \mathbf{u}) = 
+    \begin{bmatrix}
+    \mathbf{\dot{p}} \\
+    \mathbf{\ddot{p}} \\
+    \mathbf{\dot{R}} \\
+    \boldsymbol{\dot{\omega}}
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+    \mathbf{\dot{p}} \\
+    \frac{1}{M} \mathbf{f} - \mathbf{a_g} \\
+    \mathbf{R} \cdot \hat{\boldsymbol{\omega}} \\
+    {}^{B} \mathbf{I}^{-1}(R^T \boldsymbol{\tau} - \hat{\boldsymbol{\omega}} {}^{B} \mathbf{I} \boldsymbol{\omega})
+    \end{bmatrix}
+\end{equation*}
+\end{frame}
+
+
+\begin{frame}{Non-Linear MPC formulation}
+
+\begin{equation*}
+\begin{aligned}
+    & \text{minimize} \quad \sum_{k=1}^{N-1} \ell(x_k, u_k) + \ell_T(x_N) \\
+    & \text{subject to} \quad x_{k+1} = g(x_k, u_k), \quad x_1 = x_\text{op}, \\
+    & x_k \in \mathcal{X}, \quad k = 1, 2, \dots, N, \\
+    & u_k \in \mathcal{U}, \quad k = 1, 2, \dots, N-1
+\end{aligned}
+\end{equation*}
+
+\begin{itemize}
+    \item Stage cost
+    \item Terminal cost
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Resources}
+
+\begin{itemize}
+    \item \url{https://github.com/YanranDing/RF-MPC}
+        \begin{itemize}
+            \item The author's subsequent work
+            \item They implement some of the functions in MATLAB
+        \end{itemize}    
+\end{itemize}
+
 \end{frame}
 
 
