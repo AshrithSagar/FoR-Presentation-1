@@ -25,7 +25,6 @@
 
 \begin{document}
 
-
 % \section*{Titlepage}
 \begin{frame}\titlepage\end{frame}\normalfont
 
@@ -33,8 +32,129 @@
 % \section*{Outline}
 \begin{frame}{Outline}
 	\begin{enumerate}
+            \item Review
 		\item Progress
+            \item Objectives
+            \item Understanding
+            % \item Demonstration
 	\end{enumerate}
+\end{frame}\normalfont
+%\section*{Introduction}
+\begin{frame}{Introduction}
+        \textit{Representation-Free Model Predictive Control for  Dynamic Motions in Quadrupeds} (Ding et al. 2021) presents a novel MPC framework which uses the rotation matrix to represent dynamics. Along with a \textit{variation based linearisation scheme} and an orientation error function for enabling solving by a Quadratic program.
+\end{frame}\normalfont 
+%\section*{Progress}
+\begin{frame}{Progress}
+        \begin{enumerate}
+            \item{Understanding key math concepts from the paper}
+            \item{Installation and setting up of ROS/Gazebo}
+            \item{Review \& Refactoring of the existing codebase}
+        \end{enumerate}
+\end{frame}\normalfont
+%\section*{Objectives}
+\begin{frame}{Objectives}
+        \begin{enumerate}
+           % \item{Changed the reference paper from the earlier 2019 paper by the same author.}
+            \item{Attempting to get the quadruped to stand upright.}
+            \item{Improve upon the existing codebase to enable walking motion}
+            \item{Implement a QP formulation}
+            % \item{Implement a swing controller based foot placement strategy}
+            % \item{Porting the code for a \texttt{Unitree Go1} robot}
+        \end{enumerate}
+\end{frame}\normalfont
+
+\begin{frame}{RBD model}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.6\linewidth]{../Presentation-1/Illustration-RBD-model.png}
+    \caption{Illustration of the 3D Single RBD model}
+    \label{fig:rbd-model}
+\end{figure}
+\begin{equation*}
+    \mathbf{\dot{x}} = f(\mathbf{x}, \mathbf{u}) = 
+    \begin{bmatrix}
+    \mathbf{\dot{p}} \\
+    \mathbf{\ddot{p}} \\
+    \mathbf{\dot{R}} \\
+    \boldsymbol{\dot{\omega}}
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+    \mathbf{\dot{p}} \\
+    \frac{1}{M} \mathbf{f} - \mathbf{a_g} \\
+    \mathbf{R} \cdot \hat{\boldsymbol{\omega}} \\
+    {}^{B} \mathbf{I}^{-1}(R^T \boldsymbol{\tau} - \hat{\boldsymbol{\omega}} {}^{B} \mathbf{I} \boldsymbol{\omega})
+    \end{bmatrix}
+\end{equation*}
+\end{frame}
+
+
+\begin{frame}{Non-Linear MPC formulation}
+\begin{equation*}
+\begin{aligned}
+    & \text{minimize} \quad \sum_{k=1}^{N-1} \ell(\mathbf{x_k}, \mathbf{u_k}) + \ell_T(\mathbf{x_N}) \\
+    & \text{subject to} \quad \mathbf{x_{k+1}} = g(\mathbf{x_k}, \mathbf{u_k}), \quad \mathbf{x_1} = \mathbf{x_\text{op}}, \\
+    & \mathbf{x_k} \in \mathbb{X}, \quad k = 1, 2, \dots, N, \\
+    & \mathbf{u_k} \in \mathbb{U}, \quad k = 1, 2, \dots, N-1
+\end{aligned}
+\end{equation*}
+\begin{itemize}
+    \item Stage cost: $ \ell(\mathbf{x_k}, \mathbf{u_k}) = \lVert \mathbf{x_k} - \mathbf{x_{d, k}} \rVert ^ 2 \mathbf{Q_x} + \lVert \mathbf{u_k} - \mathbf{u_{d, k}} \rVert ^ 2 \mathbf{R_u}$
+    \item Terminal cost: $ \ell_T $
+    \item Error terms $\leftrightarrow$ Quadratic forms
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Non-Linear MPC formulation}
+\begin{block}{Contraints}
+\begin{itemize}
+    \item Normal forces should be non-negative when foot is in contact
+    \item Tangent forces within the friction cones.\\
+        (Linearised version uses friction pyramids).
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Variation-based Linearisation}
+\begin{block}{Assumption}
+    Predicted variables are close to the operating point.
+\end{block}
+\begin{align}
+\mathbf{R_k} & \approx \mathbf{R_{op}} (\mathbf{I} + \delta \mathbf{R_k})
+\\ \implies
+\dot{\mathbf{R_k}} & \approx \mathbf{R_{op}}\mathbf{\hat \omega_{op}} + \mathbf{R_{op}}\mathbf{\hat\omega_{op}}\mathbf{R_k} + \mathbf{R_{op}}\widehat{\delta\mathbf{\omega_k}}
+\end{align}
+\begin{equation}
+    ^B I \dot{\omega}_k = R_{op}^T \tau_{op} + \delta R_k^T \tau_{op} + R_{op}^T \delta \tau_k - \hat{\omega}_{op} {}^B I \omega_{op} - \delta \hat{\omega}_k {}^B I \omega_{op} - \hat{\omega}_{op} {}^B I \delta \omega_k
+\end{equation}
+\end{frame}
+
+\begin{frame}{Vectorisation}
+\begin{itemize}
+    \item Converting matrix-matrix products to matrix-vector products, so that it is easier for the the QP solver.
+    \item Lemmas:
+        \begin{align}
+            vec (\mathbf{AB}) & = (\mathbf{I} \otimes \mathbf{A}) vec(\mathbf{B})
+            \\ 
+            vec (\mathbf{AXB}) & = (\mathbf{B}^T \otimes \mathbf{A}) vec(\mathbf{X})
+        \end{align}
+    \item Implications:
+    We can compute the terms in the expressions by defining a few constant matrices
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Simulations}
+\begin{itemize}
+    \item Plan to do it, similar to the paper
+    \begin{itemize}
+        \item Walking trot
+        \item Bounding
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\LARGE{Thank You!}
 \end{frame}\normalfont
 
 \end{document}
