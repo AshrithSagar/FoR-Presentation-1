@@ -1,4 +1,4 @@
-\documentclass{beamer}
+     \documentclass{beamer}
 \usetheme{metropolis}
 
 \usepackage{amsmath, amssymb, amsthm}
@@ -68,25 +68,130 @@ Pics \& Vid
     \item Slipping
     \item z axis position control
     \item z axis rotation control
+    \item rqt nodes
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Simulations}
-\textbf{Flying off}
 
-\begin{block}{Problem}
+\begin{frame}{Simulations}
+
+\begin{block}{Problem: Flying off}
     \begin{itemize}
-        \item Gazebo
+        \item Put Video
+        \item Cause: Gazebo spawn entity causing the robot to fly off
     \end{itemize}
 \end{block}
 
 \begin{block}{Fix}
     \begin{itemize}
-        \item Gazebo
+        \item Restart the system everytime
     \end{itemize}
 \end{block}
 
 \end{frame}
+
+
+\begin{frame}{Simulations}
+
+\begin{block}{Problem: Just falling down}
+    \begin{itemize}
+        \item Put Video
+        \item Cause: Control manager was not loading in time
+    \end{itemize}
+\end{block}
+
+\begin{block}{Fix}
+    \begin{itemize}
+        \item 
+    \end{itemize}
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}{Simulations}
+
+\begin{block}{Problem: Standing}
+    \begin{itemize}
+        \item Put Video
+        \item Cause: Control manager was not loading in time
+    \end{itemize}
+\end{block}
+
+\begin{block}{Fix}
+    \begin{itemize}
+        \item 
+    \end{itemize}
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}{Simulations}
+
+\begin{block}{Problem: Slipping}
+    \begin{itemize}
+        \item Put Video
+        \item Cause: Friction coefficient
+    \end{itemize}
+\end{block}
+
+\begin{block}{Fix}
+    \begin{itemize}
+        \item Increased MPC HORIZON TIME from 10 to 100
+    \end{itemize}
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}{Simulations}
+
+\begin{block}{Problem: Z axis position control}
+    \begin{itemize}
+        \item Put Video
+        \item Robot flying off after any keyboard press
+        \item Cause: \texttt{teleop} was giving increments in factor of 0.5
+    \end{itemize}
+\end{block}
+
+\begin{block}{Fix}
+    \begin{itemize}
+        \item Reduced the factor to 0.05
+    \end{itemize}
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}{Simulations}
+
+\begin{block}{Z axis rotation control}
+    \begin{itemize}
+        \item Put Video
+    \end{itemize}
+\end{block}
+
+\begin{block}{Change}
+    \begin{itemize}
+        \item Passing twists entered from the keyboard using \texttt{teleop\_twist\_keyboard} to the \texttt{StanceController}
+    \end{itemize}
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}{Further plans}
+
+\begin{itemize}
+        \item Controllers
+        \item Multiple controllers
+        \item Switching between controllers
+        \item \texttt{GaitController}
+\end{itemize}
+
+\end{frame}
+
 
 \begin{frame}
     \frametitle{Video Example}
