@@ -1,0 +1,49 @@
+\documentclass{beamer}
+\usetheme{metropolis}
+
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{cite, graphicx, latexcolors}
+\usepackage{ragged2e, microtype}
+\usepackage{url, parskip, hyperref}
+\usepackage{array, tikz, flowchart}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{media9}
+
+\hypersetup{colorlinks=true,}
+\setbeamercolor{title}{fg=orange}
+
+\usetikzlibrary{arrows.meta, calc, chains, quotes, positioning, shapes.geometric}
+\tikzset{FlowChart/.style={
+    node distance = 5mm and 10mm,
+    start chain = A going right,
+    base/.style = {draw, minimum width=16mm, minimum height=19mm, align=center, on chain=A, text width=4cm},
+    process/.style = {base},
+    rounded/.style = {base, rounded corners},
+    every edge quotes/.style = {auto=right}
+}}
+
+\input{Presentation-4/titlepage.tex}
+
+\begin{document}
+
+% \section*{Titlepage}
+\begin{frame}\titlepage\end{frame}\normalfont
+
+
+% \section*{Outline}
+\begin{frame}{Outline}
+	\begin{enumerate}
+            \item Review
+		\item Progress
+            \item Objectives
+            \item Understanding
+            \item Demonstrations
+            \item Learnings
+	\end{enumerate}
+\end{frame}\normalfont
+
+\begin{frame}
+	\LARGE{Thank You!}
+\end{frame}\normalfont
+
+\end{document}
